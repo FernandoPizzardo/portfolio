@@ -4,6 +4,20 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Fernando Pizzardo — Full Stack & Mobile Engineer</title>
+<meta name="description" content="Desenvolvedor Full Stack e Mobile — Java, Spring Boot, Flutter, AWS/GCP. Portfolio profissional de Fernando Pizzardo.">
+<meta property="og:title" content="Fernando Pizzardo — Full Stack & Mobile Engineer">
+<meta property="og:description" content="Desenvolvedor Full Stack e Mobile especializado em Java/Spring Boot e Flutter. Experiência nos setores bancário, de seguros e automotivo.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://fernandopizzardo.github.io/portfolio/">
+<meta property="og:image" content="https://fernandopizzardo.github.io/portfolio/og-image.jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Fernando Pizzardo — Full Stack & Mobile Engineer">
+<meta name="twitter:description" content="Desenvolvedor Full Stack e Mobile especializado em Java/Spring Boot e Flutter.">
+<meta name="twitter:image" content="https://fernandopizzardo.github.io/portfolio/og-image.jpeg">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%232563eb'/><text x='50' y='68' text-anchor='middle' font-family='Inter,sans-serif' font-weight='700' font-size='52' fill='white'>FP</text></svg>">
+<script>(function(){var s=localStorage.getItem('theme');if(s==='dark'||(!s&&window.matchMedia('(prefers-color-scheme:dark)').matches)){document.documentElement.setAttribute('data-theme','dark');}})();</script>
 <style>
   :root {
     --ink: #0a0a0a;
@@ -16,14 +30,12 @@
     --font: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
     --mono: 'JetBrains Mono', 'SF Mono', 'Fira Code', monospace;
   }
-  @media (prefers-color-scheme: dark) {
-    :root {
-      --ink: #ededed;
-      --surface: #0a0a0a;
-      --muted: #888;
-      --border: #222;
-      --accent-soft: #2563eb22;
-    }
+  [data-theme="dark"] {
+    --ink: #ededed;
+    --surface: #0a0a0a;
+    --muted: #888;
+    --border: #222;
+    --accent-soft: #2563eb22;
   }
   * { margin: 0; padding: 0; box-sizing: border-box; }
   html { scroll-behavior: smooth; }
@@ -43,9 +55,8 @@
     z-index: 100;
     backdrop-filter: blur(12px);
   }
-  @media (prefers-color-scheme: dark) {
-    nav { background: rgba(10,10,10,.85); }
-  }
+  [data-theme="dark"] nav { background: rgba(10,10,10,.85); }
+  .nav-right { display: flex; align-items: center; gap: 8px; }
   nav .container {
     display: flex; align-items: center; justify-content: space-between;
     height: 56px;
@@ -278,6 +289,76 @@
     nav ul.open { display: flex; }
     nav ul a { display: block; padding: 12px 24px; }
   }
+
+  .theme-toggle {
+    background: none; border: 1px solid var(--border);
+    border-radius: 50%; width: 36px; height: 36px;
+    cursor: pointer; display: flex; align-items: center; justify-content: center;
+    transition: all .3s; color: var(--ink); flex-shrink: 0;
+  }
+  .theme-toggle:hover { border-color: var(--accent); color: var(--accent); }
+  .theme-toggle svg { width: 18px; height: 18px; transition: transform .5s ease; }
+  .theme-toggle .sun-icon { display: none; }
+  .theme-toggle .moon-icon { display: block; }
+  [data-theme="dark"] .theme-toggle .sun-icon { display: block; }
+  [data-theme="dark"] .theme-toggle .moon-icon { display: none; }
+
+  .scroll-reveal {
+    opacity: 0; transform: translateY(24px);
+    transition: opacity .6s ease, transform .6s ease;
+  }
+  .scroll-reveal.visible { opacity: 1; transform: translateY(0); }
+  .delay-1 { transition-delay: .1s; }
+  .delay-2 { transition-delay: .2s; }
+  .delay-3 { transition-delay: .3s; }
+  .delay-4 { transition-delay: .4s; }
+
+  .projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 24px;
+  }
+  .project-card {
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+    transition: border-color .3s, transform .3s;
+  }
+  .project-card:hover {
+    border-color: var(--accent);
+    transform: translateY(-4px);
+  }
+  .project-card-img {
+    height: 160px; background: var(--accent-soft);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 2.5rem;
+  }
+  .project-card-body { padding: 20px; }
+  .project-card-body h3 {
+    font-size: 1.05rem; font-weight: 600; margin-bottom: 6px;
+  }
+  .project-card-body p {
+    font-size: .88rem; color: var(--muted); line-height: 1.6;
+    margin-bottom: 12px;
+  }
+  .project-card-tags {
+    display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 12px;
+  }
+  .project-card-tags span {
+    padding: 3px 10px; border-radius: 100px;
+    background: var(--accent-soft); color: var(--accent);
+    font-size: .75rem; font-weight: 500;
+  }
+  .project-card-links { display: flex; gap: 12px; }
+  .project-card-links a {
+    font-size: .85rem; font-weight: 500; color: var(--accent);
+    text-decoration: none; transition: opacity .2s;
+  }
+  .project-card-links a:hover { opacity: .7; }
+
+  @media (max-width: 640px) {
+    .projects-grid { grid-template-columns: 1fr; }
+  }
 </style>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -287,30 +368,37 @@
 <nav>
   <div class="container">
     <div class="logo">FP</div>
-    <button class="hamburger" onclick="document.querySelector('nav ul').classList.toggle('open')" aria-label="Menu">
+    <div class="nav-right">
+    <button class="hamburger" onclick="document.querySelector('.nav-right ul').classList.toggle('open')" aria-label="Menu">
       <span></span><span></span><span></span>
     </button>
     <ul>
       <li><a href="#about">Sobre</a></li>
       <li><a href="#experience">Experiência</a></li>
+      <li><a href="#projects">Projetos</a></li>
       <li><a href="#skills">Competências</a></li>
       <li><a href="#education">Formação</a></li>
       <li><a href="#contact">Contato</a></li>
     </ul>
+    <button class="theme-toggle" id="themeToggle" aria-label="Alternar tema">
+      <svg class="sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+      <svg class="moon-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
+    </button>
+    </div>
   </div>
 </nav>
 
 <section class="hero">
   <div class="container">
-    <h1>Fernando<br>Melo Pizzardo</h1>
-    <p class="tagline">Full Stack &amp; Mobile Engineer</p>
-    <p class="sub">Osasco &middot; SP &middot; Brasil</p>
-    <p class="contact-top">
+    <h1 class="scroll-reveal">Fernando<br>Melo Pizzardo</h1>
+    <p class="tagline scroll-reveal delay-1">Full Stack &amp; Mobile Engineer</p>
+    <p class="sub scroll-reveal delay-2">Osasco &middot; SP &middot; Brasil</p>
+    <p class="contact-top scroll-reveal delay-3">
       <a href="tel:+5511991656635">+55 (11) 99165-6635</a>
       &nbsp;&middot;&nbsp;
       <a href="mailto:fermelo95@gmail.com">fermelo95@gmail.com</a>
     </p>
-    <div class="badges">
+    <div class="badges scroll-reveal delay-4">
       <span class="badge">Java</span>
       <span class="badge">Kotlin</span>
       <span class="badge">Dart</span>
@@ -324,8 +412,8 @@
 
 <section id="about">
   <div class="container">
-    <h2>Sobre</h2>
-    <div class="about-text">
+    <h2 class="scroll-reveal">Sobre</h2>
+    <div class="about-text scroll-reveal delay-1">
       <p>
         Desenvolvedor <strong>Full Stack e Mobile</strong> orientado a resultados, com ampla experiência 
         em consultoria para empresas de grande porte nos setores <strong>bancário</strong>, 
@@ -339,10 +427,10 @@
 
 <section id="experience">
   <div class="container">
-    <h2>Experiência</h2>
+    <h2 class="scroll-reveal">Experiência</h2>
     <div class="timeline">
 
-      <div class="job">
+      <div class="job scroll-reveal delay-1">
         <div class="job-header">
           <div>
             <span class="job-title">Mobile Engineer</span>
@@ -367,7 +455,7 @@
         </div>
       </div>
 
-      <div class="job">
+      <div class="job scroll-reveal delay-2">
         <div class="job-header">
           <div>
             <span class="job-title">Support Mobile Developer</span>
@@ -390,7 +478,7 @@
         </div>
       </div>
 
-      <div class="job">
+      <div class="job scroll-reveal delay-3">
         <div class="job-header">
           <div>
             <span class="job-title">Flutter / Android Developer</span>
@@ -414,7 +502,7 @@
         </div>
       </div>
 
-      <div class="job">
+      <div class="job scroll-reveal delay-4">
         <div class="job-header">
           <div>
             <span class="job-title">Mobile Developer</span>
@@ -440,7 +528,7 @@
         </div>
       </div>
 
-      <div class="job">
+      <div class="job scroll-reveal delay-5">
         <div class="job-header">
           <div>
             <span class="job-title">Java Developer</span>
@@ -466,7 +554,7 @@
         </div>
       </div>
 
-      <div class="job">
+      <div class="job scroll-reveal delay-6">
         <div class="job-header">
           <div>
             <span class="job-title">Freelance Web Developer</span>
@@ -492,12 +580,51 @@
   </div>
 </section>
 
+<section id="projects">
+  <div class="container">
+    <h2 class="scroll-reveal">Projetos</h2>
+    <div class="projects-grid">
+
+      <div class="project-card scroll-reveal delay-1">
+        <div class="project-card-img">🏋️</div>
+        <div class="project-card-body">
+          <h3>Voltta Fitness</h3>
+          <p>Progressive Web Application (PWA) em React Native e SaaS em Next.js para gestão de academias, com dados em tempo real de treinos e rotinas de exercícios.</p>
+          <div class="project-card-tags">
+            <span>React Native</span>
+            <span>Next.js</span>
+            <span>TypeScript</span>
+            <span>PWA</span>
+            <span>REST</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="project-card scroll-reveal delay-2">
+        <div class="project-card-img">🏦</div>
+        <div class="project-card-body">
+          <h3>Banco Master — App Híbrido</h3>
+          <p>Aplicativo bancário híbrido de larga escala com comunicação nativa via Method Channels entre Android e Flutter, utilizando GetX para gerenciamento de estado.</p>
+          <div class="project-card-tags">
+            <span>Flutter</span>
+            <span>Android</span>
+            <span>Method Channels</span>
+            <span>GetX</span>
+            <span>Dart</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
 <section id="skills">
   <div class="container">
-    <h2>Competências Técnicas</h2>
+    <h2 class="scroll-reveal">Competências Técnicas</h2>
     <div class="skills-grid">
 
-      <div class="skill-cat">
+      <div class="skill-cat scroll-reveal delay-1">
         <h3>Linguagens</h3>
         <div class="skill-items">
           <span class="skill-item">Java</span>
@@ -509,7 +636,7 @@
         </div>
       </div>
 
-      <div class="skill-cat">
+      <div class="skill-cat scroll-reveal delay-2">
         <h3>Frameworks & Mobile</h3>
         <div class="skill-items">
           <span class="skill-item">Spring Boot</span>
@@ -523,7 +650,7 @@
         </div>
       </div>
 
-      <div class="skill-cat">
+      <div class="skill-cat scroll-reveal delay-3">
         <h3>Cloud & DevOps</h3>
         <div class="skill-items">
           <span class="skill-item">AWS</span>
@@ -534,7 +661,7 @@
         </div>
       </div>
 
-      <div class="skill-cat">
+      <div class="skill-cat scroll-reveal delay-4">
         <h3>Arquitetura</h3>
         <div class="skill-items">
           <span class="skill-item">Microserviços</span>
@@ -544,7 +671,7 @@
         </div>
       </div>
 
-      <div class="skill-cat">
+      <div class="skill-cat scroll-reveal delay-5">
         <h3>Idiomas</h3>
         <div class="skill-items">
           <span class="skill-item">🇧🇷 Português — Nativo</span>
@@ -553,7 +680,7 @@
         </div>
       </div>
 
-      <div class="skill-cat">
+      <div class="skill-cat scroll-reveal delay-6">
         <h3>Metodologias</h3>
         <div class="skill-items">
           <span class="skill-item">Scrum</span>
@@ -569,13 +696,13 @@
 
 <section id="education">
   <div class="container">
-    <h2>Formação</h2>
-    <div class="edu-item">
+    <h2 class="scroll-reveal">Formação</h2>
+    <div class="edu-item scroll-reveal delay-1">
       <h3>MBA em Arquitetura de Software & Soluções e I.A.</h3>
       <div class="meta">XP Educação — 2024</div>
       <div class="desc">Focado em Arquitetura Cloud, DevOps, metodologias ágeis e design de aplicações web modernas.</div>
     </div>
-    <div class="edu-item">
+    <div class="edu-item scroll-reveal delay-2">
       <h3>Bacharelado em Relações Internacionais</h3>
       <div class="meta">PUC-SP — 2018</div>
     </div>
@@ -584,11 +711,11 @@
 
 <section id="contact">
   <div class="container" style="text-align:center;">
-    <h2>Vamos conversar?</h2>
-    <p style="color:var(--muted);margin-bottom:32px;font-size:1.05rem;">
+    <h2 class="scroll-reveal">Vamos conversar?</h2>
+    <p style="color:var(--muted);margin-bottom:32px;font-size:1.05rem;" class="scroll-reveal delay-1">
       Buscando oportunidades como Full Stack &amp; Mobile Engineer.
     </p>
-    <div class="contact-links">
+    <div class="contact-links scroll-reveal delay-2">
       <a href="mailto:fermelo95@gmail.com" class="contact-link primary">
         📧 fermelo95@gmail.com
       </a>
@@ -610,6 +737,30 @@
     <p>© 2026 Fernando Melo Pizzardo &middot; Osasco &middot; SP &middot; Brasil</p>
   </div>
 </footer>
+
+<script>
+document.getElementById('themeToggle').addEventListener('click', function() {
+  var html = document.documentElement;
+  var isDark = html.getAttribute('data-theme') === 'dark';
+  var next = isDark ? 'light' : 'dark';
+  html.setAttribute('data-theme', next);
+  localStorage.setItem('theme', next);
+});
+
+(function() {
+  var observer = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+  document.querySelectorAll('.scroll-reveal').forEach(function(el) {
+    observer.observe(el);
+  });
+})();
+</script>
 
 </body>
 </html>

@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fernando Pizzardo — Android & Flutter Senior</title>
+<style>
+  :root {
+    --ink: #0a0a0a;
+    --surface: #ffffff;
+    --muted: #6b6b6b;
+    --border: #e5e5e5;
+    --accent: #6c5ce7;
+    --accent-soft: #a29bfe22;
+    --radius: 12px;
+    --font: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    --mono: 'JetBrains Mono', 'SF Mono', 'Fira Code', monospace;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --ink: #ededed;
+      --surface: #0a0a0a;
+      --muted: #888;
+      --border: #222;
+      --accent-soft: #6c5ce722;
+    }
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: var(--font);
+    color: var(--ink);
+    background: var(--surface);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+  .container { max-width: 960px; margin: 0 auto; padding: 0 24px; }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0;
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    z-index: 100;
+    backdrop-filter: blur(12px);
+    background: rgba(255,255,255,.85);
+  }
+  @media (prefers-color-scheme: dark) {
+    nav { background: rgba(10,10,10,.85); }
+  }
+  nav .container {
+    display: flex; align-items: center; justify-content: space-between;
+    height: 56px;
+  }
+  nav .logo { font-weight: 700; font-size: 1.1rem; letter-spacing: -.02em; }
+  nav ul { display: flex; gap: 24px; list-style: none; }
+  nav a {
+    text-decoration: none; color: var(--muted); font-size: .9rem;
+    transition: color .2s;
+  }
+  nav a:hover { color: var(--ink); }
+
+  /* ── HERO ── */
+  .hero {
+    padding: 140px 0 80px;
+    text-align: center;
+  }
+  .hero h1 {
+    font-size: clamp(2.5rem, 6vw, 4rem);
+    font-weight: 800;
+    letter-spacing: -.03em;
+    line-height: 1.1;
+    margin-bottom: 16px;
+  }
+  .hero .tagline {
+    font-size: 1.2rem;
+    color: var(--muted);
+    margin-bottom: 12px;
+  }
+  .hero .sub {
+    font-size: .95rem;
+    color: var(--muted);
+    margin-bottom: 32px;
+  }
+  .hero .badges {
+    display: flex; gap: 8px; justify-content: center; flex-wrap: wrap;
+  }
+  .badge {
+    display: inline-block;
+    padding: 6px 14px;
+    border-radius: 100px;
+    background: var(--accent-soft);
+    color: var(--accent);
+    font-size: .85rem;
+    font-weight: 500;
+    border: 1px solid var(--accent);
+  }
+
+  /* ── SECTIONS ── */
+  section { padding: 72px 0; }
+  section + section { border-top: 1px solid var(--border); }
+  h2 {
+    font-size: 1.75rem;
+    font-weight: 700;
+    letter-spacing: -.02em;
+    margin-bottom: 40px;
+  }
+
+  /* ── ABOUT ── */
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+  }
+  @media (max-width: 640px) { .about-grid { grid-template-columns: 1fr; } }
+  .about-text { font-size: 1.05rem; line-height: 1.7; color: var(--muted); }
+  .about-text strong { color: var(--ink); }
+
+  .quick-info { display: flex; flex-direction: column; gap: 16px; }
+  .info-row {
+    display: flex; align-items: center; gap: 12px;
+    padding: 12px 16px;
+    background: var(--accent-soft);
+    border-radius: var(--radius);
+    font-size: .9rem;
+  }
+  .info-row .label {
+    color: var(--muted);
+    min-width: 72px;
+    font-weight: 500;
+  }
+  .info-row .value { color: var(--ink); font-weight: 500; }
+
+  /* ── EXPERIENCE ── */
+  .timeline { position: relative; padding-left: 32px; }
+  .timeline::before {
+    content: '';
+    position: absolute; left: 7px; top: 8px; bottom: 8px;
+    width: 2px;
+    background: var(--border);
+  }
+  .job { position: relative; margin-bottom: 40px; }
+  .job:last-child { margin-bottom: 0; }
+  .job::before {
+    content: '';
+    position: absolute; left: -28px; top: 6px;
+    width: 14px; height: 14px;
+    border-radius: 50%;
+    background: var(--accent);
+    border: 3px solid var(--surface);
+  }
+  .job-header {
+    display: flex; justify-content: space-between; align-items: baseline;
+    flex-wrap: wrap; gap: 8px;
+    margin-bottom: 4px;
+  }
+  .job-title { font-size: 1.1rem; font-weight: 600; }
+  .job-company { color: var(--accent); font-weight: 500; }
+  .job-date { font-size: .85rem; color: var(--muted); white-space: nowrap; }
+  .job-desc {
+    color: var(--muted);
+    font-size: .93rem;
+    margin-top: 8px;
+    line-height: 1.6;
+  }
+  .job-tags {
+    display: flex; gap: 6px; flex-wrap: wrap;
+    margin-top: 10px;
+  }
+  .job-tag {
+    padding: 3px 10px;
+    border-radius: 100px;
+    background: var(--accent-soft);
+    color: var(--accent);
+    font-size: .78rem;
+    font-weight: 500;
+  }
+
+  /* ── SKILLS ── */
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 24px;
+  }
+  .skill-cat { }
+  .skill-cat h3 {
+    font-size: .85rem;
+    text-transform: uppercase;
+    letter-spacing: .06em;
+    color: var(--muted);
+    margin-bottom: 10px;
+  }
+  .skill-items { display: flex; flex-wrap: wrap; gap: 8px; }
+  .skill-item {
+    padding: 6px 14px;
+    border-radius: 100px;
+    border: 1px solid var(--border);
+    font-size: .85rem;
+    font-weight: 500;
+  }
+
+  /* ── EDUCATION ── */
+  .edu-item {
+    padding: 20px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    margin-bottom: 16px;
+  }
+  .edu-item:last-child { margin-bottom: 0; }
+  .edu-item h3 { font-size: 1rem; font-weight: 600; margin-bottom: 2px; }
+  .edu-item .meta {
+    font-size: .88rem; color: var(--muted);
+  }
+
+  /* ── CONTACT / CTA ── */
+  .contact-links {
+    display: flex; gap: 16px; justify-content: center; flex-wrap: wrap;
+  }
+  .contact-link {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 12px 24px;
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+    text-decoration: none;
+    color: var(--ink);
+    font-weight: 500;
+    font-size: .95rem;
+    transition: all .2s;
+  }
+  .contact-link:hover {
+    background: var(--accent-soft);
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+  .contact-link.primary {
+    background: var(--accent);
+    color: #fff;
+    border-color: var(--accent);
+  }
+  .contact-link.primary:hover {
+    opacity: .9;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    text-align: center;
+    padding: 40px 0;
+    color: var(--muted);
+    font-size: .85rem;
+    border-top: 1px solid var(--border);
+  }
+
+  /* ── MOBILE NAV ── */
+  .hamburger { display: none; background: none; border: none; cursor: pointer; padding: 4px; }
+  .hamburger span {
+    display: block; width: 24px; height: 2px;
+    background: var(--ink); margin: 5px 0;
+    transition: .3s;
+    border-radius: 2px;
+  }
+  @media (max-width: 640px) {
+    .hamburger { display: block; }
+    nav ul {
+      display: none;
+      position: absolute; top: 56px; left: 0; right: 0;
+      flex-direction: column; gap: 0;
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      padding: 8px 0;
+    }
+    nav ul.open { display: flex; }
+    nav ul a {
+      display: block; padding: 12px 24px;
+    }
+  }
+</style>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<nav>
+  <div class="container">
+    <div class="logo">FP</div>
+    <button class="hamburger" onclick="document.querySelector('nav ul').classList.toggle('open')" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+    <ul>
+      <li><a href="#about">Sobre</a></li>
+      <li><a href="#experience">Experiência</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#education">Formação</a></li>
+      <li><a href="#contact">Contato</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- ── HERO ── -->
+<section class="hero">
+  <div class="container">
+    <h1>Fernando<br>Pizzardo</h1>
+    <p class="tagline">Senior Android &amp; Flutter Engineer</p>
+    <p class="sub">Osasco &middot; SP &middot; Brasil</p>
+    <div class="badges">
+      <span class="badge">Kotlin</span>
+      <span class="badge">Jetpack Compose</span>
+      <span class="badge">Flutter</span>
+      <span class="badge">Clean Architecture</span>
+      <span class="badge">Mobile Platform</span>
+    </div>
+  </div>
+</section>
+
+<!-- ── ABOUT ── -->
+<section id="about">
+  <div class="container">
+    <h2>Sobre</h2>
+    <div class="about-grid">
+      <div class="about-text">
+        <p>
+          Engenheiro de software mobile <strong>Senior</strong> com mais de <strong>4 anos</strong> 
+          construindo apps nativos Android (<strong>Kotlin/Java</strong>) e cross-platform 
+          (<strong>Flutter</strong>) para empresas como <strong>99</strong> (Cripto) e 
+          <strong>BRQ</strong>, atendendo clientes como Renault, Banco Master, Porto Seguro e Dandelin.
+        </p>
+        <br>
+        <p>
+          Experiência sólida em <strong>Clean Architecture</strong>, <strong>MVVM</strong>, 
+          <strong>modularização</strong>, <strong>testes automatizados</strong> e 
+          <strong>CI/CD</strong>. Foco em arquitetura de plataforma, performance e 
+          experiência do usuário em escala.
+        </p>
+        <br>
+        <p>
+          <strong>Inglês fluente</strong> &middot; Francês intermediário &middot; MBA em 
+          Arquitetura de Software pela XP Educação.
+        </p>
+      </div>
+      <div class="quick-info">
+        <div class="info-row">
+          <span class="label">📍</span>
+          <span class="value">Osasco, SP — Brasil</span>
+        </div>
+        <div class="info-row">
+          <span class="label">📧</span>
+          <span class="value">fermelo95@gmail.com</span>
+        </div>
+        <div class="info-row">
+          <span class="label">🔗</span>
+          <span class="value">linkedin.com/in/fernando-melo-pizzardo-19a2aa96</span>
+        </div>
+        <div class="info-row">
+          <span class="label">🌐</span>
+          <span class="value">Inglês fluente · Francês interm.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── EXPERIENCE ── -->
+<section id="experience">
+  <div class="container">
+    <h2>Experiência</h2>
+    <div class="timeline">
+
+      <div class="job">
+        <div class="job-header">
+          <div>
+            <span class="job-title">Mobile Engineer</span>
+            <span class="job-company"> @ 99 (Cripto)</span>
+          </div>
+          <span class="job-date">2024 — 2025</span>
+        </div>
+        <div class="job-desc">
+          Desenvolvimento Android nativo para soluções financeiras. Arquitetura modular, 
+          performance otimizada e integração com APIs de criptomoedas.
+        </div>
+        <div class="job-tags">
+          <span class="job-tag">Kotlin</span>
+          <span class="job-tag">Android</span>
+          <span class="job-tag">Clean Arch</span>
+          <span class="job-tag">MVVM</span>
+        </div>
+      </div>
+
+      <div class="job">
+        <div class="job-header">
+          <div>
+            <span class="job-title">Mobile Engineer</span>
+            <span class="job-company"> @ BRQ Digital Solutions</span>
+          </div>
+          <span class="job-date">2021 — 2024</span>
+        </div>
+        <div class="job-desc">
+          Atuação como Mobile Engineer em projetos de grande escala para múltiplos clientes, 
+          incluindo <strong>Renault</strong>, <strong>Banco Master</strong>, 
+          <strong>Porto Seguro</strong> e <strong>Dandelin</strong>. 
+          Desenvolvimento Android (Kotlin/Java) e Flutter, com foco em arquitetura, 
+          testes automatizados e CI/CD.
+        </div>
+        <div class="job-tags">
+          <span class="job-tag">Kotlin</span>
+          <span class="job-tag">Flutter</span>
+          <span class="job-tag">Modularização</span>
+          <span class="job-tag">CI/CD</span>
+          <span class="job-tag">Testes</span>
+        </div>
+      </div>
+
+      <div class="job">
+        <div class="job-header">
+          <div>
+            <span class="job-title">Desenvolvedor Mobile</span>
+            <span class="job-company"> @ Melo &amp; Pizzardo Consultoria</span>
+          </div>
+          <span class="job-date">2021 — presente</span>
+        </div>
+        <div class="job-desc">
+          Consultoria em desenvolvimento mobile, atuando como PJ para empresas de 
+          tecnologia. Projetos Android nativo e Flutter, com entregas de ponta a ponta.
+        </div>
+        <div class="job-tags">
+          <span class="job-tag">Android</span>
+          <span class="job-tag">Flutter</span>
+          <span class="job-tag">Consultoria</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── SKILLS ── -->
+<section id="skills">
+  <div class="container">
+    <h2>Skills</h2>
+    <div class="skills-grid">
+
+      <div class="skill-cat">
+        <h3>Mobile</h3>
+        <div class="skill-items">
+          <span class="skill-item">Kotlin</span>
+          <span class="skill-item">Java</span>
+          <span class="skill-item">Jetpack Compose</span>
+          <span class="skill-item">Android SDK</span>
+          <span class="skill-item">Flutter</span>
+          <span class="skill-item">Dart</span>
+        </div>
+      </div>
+
+      <div class="skill-cat">
+        <h3>Arquitetura</h3>
+        <div class="skill-items">
+          <span class="skill-item">Clean Architecture</span>
+          <span class="skill-item">MVVM</span>
+          <span class="skill-item">MVI</span>
+          <span class="skill-item">Modularização</span>
+          <span class="skill-item">Server-Driven UI</span>
+        </div>
+      </div>
+
+      <div class="skill-cat">
+        <h3>Ferramentas</h3>
+        <div class="skill-items">
+          <span class="skill-item">Git</span>
+          <span class="skill-item">CI/CD</span>
+          <span class="skill-item">Gradle</span>
+          <span class="skill-item">Kotlin DSL</span>
+          <span class="skill-item">Firebase</span>
+        </div>
+      </div>
+
+      <div class="skill-cat">
+        <h3>Qualidade</h3>
+        <div class="skill-items">
+          <span class="skill-item">JUnit</span>
+          <span class="skill-item">MockK</span>
+          <span class="skill-item">Espresso</span>
+          <span class="skill-item">UI Tests</span>
+          <span class="skill-item">Observabilidade</span>
+        </div>
+      </div>
+
+      <div class="skill-cat">
+        <h3>Idiomas</h3>
+        <div class="skill-items">
+          <span class="skill-item">🇧🇷 Português — nativo</span>
+          <span class="skill-item">🇺🇸 Inglês — fluente</span>
+          <span class="skill-item">🇫🇷 Francês — intermediário</span>
+        </div>
+      </div>
+
+      <div class="skill-cat">
+        <h3>Outros</h3>
+        <div class="skill-items">
+          <span class="skill-item">Scrum</span>
+          <span class="skill-item">Kanban</span>
+          <span class="skill-item">REST APIs</span>
+          <span class="skill-item">GraphQL</span>
+          <span class="skill-item">Play Store</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── EDUCATION ── -->
+<section id="education">
+  <div class="container">
+    <h2>Formação</h2>
+    <div class="edu-item">
+      <h3>MBA em Arquitetura de Software</h3>
+      <div class="meta">XP Educação — 2024</div>
+    </div>
+    <div class="edu-item">
+      <h3>Bacharelado em Ciência da Computação</h3>
+      <div class="meta">Universidade Paulista — 2020</div>
+    </div>
+  </div>
+</section>
+
+<!-- ── CONTACT ── -->
+<section id="contact">
+  <div class="container" style="text-align:center;">
+    <h2>Vamos conversar?</h2>
+    <p style="color:var(--muted);margin-bottom:32px;font-size:1.05rem;">
+      Buscando oportunidades como Senior Android Engineer.
+    </p>
+    <div class="contact-links">
+      <a href="mailto:fermelo95@gmail.com" class="contact-link primary">
+        📧 fermelo95@gmail.com
+      </a>
+      <a href="https://linkedin.com/in/fernando-melo-pizzardo-19a2aa96" target="_blank" class="contact-link">
+        🔗 LinkedIn
+      </a>
+      <a href="https://github.com/FernandoPizzardo" target="_blank" class="contact-link">
+        🐙 GitHub
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <p>© 2026 Fernando Melo Pizzardo &middot; CNPJ 43.282.176/0001-96</p>
+  </div>
+</footer>
+
+</body>
+</html>
